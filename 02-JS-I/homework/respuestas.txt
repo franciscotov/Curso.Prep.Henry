@@ -1,0 +1,57 @@
+En un archivo de texto separado que debes crear, escribe explicaciones de los siguientes 
+conceptos como si se lo estuvieras explicando a un niño de 12 años. Hacer esto te ayudará a 
+descubrir rápidamente cualquier agujero en tu comprensión.
+
+	* Variables : las variables son espacio reservado en la memoria, podemos imaginar que tenemos una caja(memoria)
+    en la cual necesitamos guardar cosas para su porterior uso, pues bien una variable no es mas que reservar un espacio
+    en esa caja y etiquetarlo con un nombre(esto es llamado declaracion de variable y la etiqueta usada es llamada 
+    identificador) el cual sirve para hacer referencia a otro valor (inicialización de variable) 
+    que puede ser una cantidad(numero), nombre(string), etc.
+    En el leguaje javascript tenemos tres formas de declarar variables, estas son son las palabras claves
+    var: la declaración de ambito global, es decir, se puede usar en cualquier lugar
+    let: la declaracion es de ambito local, en otras palabras, solo puede usarse dentro del lugar don de fue declarada la
+    variable.
+    const: la declaración de la variable es de solo lectura, es decir, el espacio y el valor con que fue declaro e 
+    iniciado la variable no puede cambiar.
+	* Strings: es un tipo de variable, el cual es usada para almacenar texto o cadena de caracteres. estan pueden ser
+    definidas con comillas simples '' o comillas dobles, a saber:
+    var mi_string = "cualquier texto"
+	* Funciones (argumentos, `return`): una función es una pieza de código que se utiliza para hacer los programas más
+    eficientes y entendibles, podemos imaginar que tenemos varias tareas a realizar y alguna de las partes de dichas tareas
+    son comunes, entonces podemos construir una herramienta que permita realizar dicha parte común, de manera que al
+    realizar cada tarea no repitamos esos pasos.
+    En javascript tenemos que usar la palabra clave function para definir una función.
+    function my_function(){
+        // declaraciones
+    }
+    Comunmente una función es creada de manera que puede recibir uno o varios argumentos(elementos que son entegados al
+    momento de llamar la funcion) y retornar un valor modificado en función de los argumentos recibidos(valor que necesitamos
+    que nos devuelva la función) esto se logra usando la palabra clave return anteponiendola al valor que deseamos retornar,
+    podemos tomar como ejemplo lo siguiente:
+    function my_function(arg){
+        // en el caso del llamado a la función my_function(3) arg toma el valor 3, es decir; arg = 3
+        let valor = arg * 2; // multiplicamos el argumento por 2
+        return valor; // valor de retorno
+    }
+
+    // llamada a la función
+    my_function(3);
+
+	* Declaraciones `if`: la palabra clave 'if' es utilizada para tomar desiciones en función de si se cumple cierta
+    condición, veamos el siguiente bloque de código:
+    function comparar_valor(num){
+        //preguntamos si el numero es mayor a 50
+        if(num > 50){
+            return 'mayor';
+        }
+        return 'menor';
+    }
+    la función comparar_valor() hace uso de la declaración if para comparar si el número es mayor a un valor determinado
+    (en este caso 50), si el numero es mayor que 50 la función retorna una cadena de valor 'mayor', en caso contrario 
+    retorna 'menor'
+
+	* Valores booleanos (`true`, `false`): entre sus tipos de datos, javascript posee 'true' y 'false' como valores booleanos
+    tomando parte del ejemplo anterior cuando evaluamos en valor de num en la sentencia if en realidad lo que nos estamos 
+    preguntando es si la comparación de los dos valores 'num' y '50' es 'true', note que el operador > determina si esto 
+    se cumple o no, en cuyo caso devuelve true lo que es suficiente para que le código dentro de la declaración if sea
+    corrido. 

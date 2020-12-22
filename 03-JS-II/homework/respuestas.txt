@@ -1,0 +1,27 @@
+En un archivo de texto separado que debes crear, escribe explicaciones de los siguientes conceptos como si se lo 
+estuvieras explicando a un niño de 12 años. Hacer esto te ayudará a descubrir rápidamente cualquier agujero en tu 
+comprensión.
+
+* `for`: es un bucle que repetirá un bloque de codigo mientras se cumpla cierta condición,
+  la sintaxis es la siguiente:
+  for(inicio variable; condicion, paso){
+    //booque de código
+  }
+  inicio variable: declaramos e iniciamos la variable, la cual comunmente es utilizada para establecer la condición y el
+  paso para el bucle, ej: var i = 0; iniciamos la variable i con valor 0
+  condicion: la condición que se debe cumplir para que se el flujo del programa salga del bucle, es decir, ya no se
+  ejecuta el bloque de codigo. ej: i > 100;
+  paso: el paso establece por cuanto se encrementa o decrementa la variable del bucle, ej si establecemos el paso como
+  i++ quiere decir que i será incrementado en una unidad por cada ejecución del bloque  de código, con este paso
+  la condición y el valor inicial de la varable i tendrá valores de 0 a 100 antes de salir del bucle.
+
+* `&&`, `||`, `!`: son operadores lógicos, que sirven para realizar el algebra booleana, imaginemos que tenemos dos 
+  variables booleanas a y b que pueden tener cualquiera de los dos valores true o false
+  si nosotros aplicamos estos operadores logicos obtenemos que:
+    - el resultado de a && b solo será true si ambas tienen como valor true, si cualquiera es false el resultado será false
+    el operador && es llamado AND ó "y" en castellano, podemos establecer la regla siguiente como ayuda
+    a && b "a y b son true?" acá se ve que si alguna no es true pues el resultado es falso 
+    - el resultado de a || b solo será false si ambas son false, de los contrario el resultado es true, este operador 
+    es llamado OR ó "o", como regla memo técnica podemos utilizar el operador como pregunta a || b "a ó b es true?"
+    -el operador ! es llamado operador de negación, simplemente lo que hace es invertir el valor lógico de la variable, 
+    y se usa anteponiendo este a la variable (!variable), supongamos a = true, si hacemos !a el resulado es false
