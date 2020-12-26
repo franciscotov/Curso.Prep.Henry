@@ -1,0 +1,39 @@
+En un archivo de texto separado que debes crear, escribe explicaciones de los siguientes conceptos como si se lo estuvieras explicando a un niño de 12 años. Hacer esto te ayudará a descubrir rápidamente cualquier agujero en tu comprensión.
+
+	* Arrays: Los arreglos son una colección de variables, nuevemente podemos imaginar que tenemos una caja y allí podemos
+    colocar diferentes objetos, dichos objetos son las variable, cada espacio que cubre dicho objeto en la caja tiene una
+    etiqueta, en el lenguaje de JS esto se define de la siguiente manera:
+    var array = [1, 'fran', undefined, true, function(){return 'Hola'}, [1,2,3]]
+    la definicion arriba escrita define un arreglo en javascript, las cosas a tener en cuenta es la manera en la que definimos
+    dicho arreglo, notamos que se define como una variable cualquiera, pero los valores de la colección están entre
+    corchetes o brackets y cada uno separado por comas, lo interesante ademas es que cada item puede tomar cualquier valor,
+    el valor en la primera posición es un entero, el segundo un string, el cuarto un booleano, el quinto una función, etc.
+    La lectura de estos valores la hacemos agregando [] al nombre de la variable y colocando el numero correspondiente de
+    la variable(la etiqueta en la caja), debemos tener en cuanta la manera en la que el lenguaje nos permite leer y la eti-
+    queta que coloca a cada posición, se comienza a leer desde la posición 0 en adelante a saber:
+
+    [1, 'fran', undefined, true, function(){return 'Hola'}, [1,2,3]]
+     0    1       2         3               4                  5
+    si vamos a leer como fue dicho anteriormente
+    array[0] // nos devolverá 1
+    array[1] // nos devolverá 'fran'
+    ...
+    tambien es muy importante destacar que los arreglos son estructuras mutables es decir los valores y su longitud son de
+    lectura/escritura, podemos hacer lo siguiente
+
+    array[0] = 2;
+    si miramos array
+    console.log(array) // [2, 'fran', undefined, true, function(){return 'Hola'}, [1,2,3]]
+    se modifica el valor de la primera posición, correspondiente a la posicion 0
+
+    si queremos conocer la longitud de un arreglo js tiene incorporado una propiedad llamada length, esta propiedad
+    nos devuelve la longitud del arreglo o la cantidad de elementos en el arreglo
+
+    array.length // 6 numero de elementos
+    
+    notemos que nos indica que tenemos 6 elementos es decir "cuenta" a partir de 1, distinto de la manera en la que leemos
+    los valores del array, es decir si queremos leer el último elemento de un arreglo debemos hacer
+    
+    array[array.length-1]
+    ya que para leer nuestras posiciones van de 0 a 5 en el caso de nuestro array
+

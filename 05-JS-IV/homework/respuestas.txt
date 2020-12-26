@@ -1,0 +1,212 @@
+1. En un archivo de texto separado que debes crear, escribe explicaciones de los siguientes conceptos como si se lo estuvieras explicando a un niño de 12 años. Hacer esto te ayudará a descubrir rápidamente cualquier agujero en tu comprensión.
+
+	* Objetos: los objetos son una colección de propiedades, parecido a lo que vimos con los arreglos, las propiedades
+    no son más que el indice de un valor especifico, estas propiedades en si representan una asociación entre un nombre
+    o clave(key) y un valor(value), los objetos son definidos de manera literal como sigue:
+
+	var myObjeto = {
+		nombre : 'fran', 
+		apellido : 'tovar', 
+		edad: 29, 
+		funcion : function(){return 'programar'}
+	};
+	
+	Vemos que para crear un objeto basta con encerrar las propiedades entre llaves {}, en el objeto creado, hemos definido
+	cuatro propiedades las cuales son: nombre, apellido, edad y funcion, notamos que un objeto puede verse como una 
+	lista ampliada ó más descriptiva, ya que los valores que se pueden guardar en ambos son de todo tipo, string, enteros, funciones
+	otros arreglos, etc, pero las claves nos permiten tener mayor flexibilidad a la hora de manipular dicho objeto.
+
+	Un objeto es manipulable y todas sus propiedades son de lectura-escritura, veamos la forma en la que podemos acceder
+	a los valores del objeto creado
+
+	//accedemos al valor de la propiedad nombre
+	myObjeto['nombre']; // 'fran'
+	//cambio del valor de la propiedad nombre
+	myObjeto['nombre'] = 'francisco';
+	//el objeto original ha cambiado
+	myObjeto; // {
+		nombre : 'francisco', 
+		apellido : 'tovar', 
+		edad: 29, 
+		funcion : function(){return 'programar'}
+		}
+
+	Así como hemos modificado la propiedad nombre de myObjeto podemos acceder y cambiar los valores de todas las 
+	propiedades, no solo eso sino que tambien podemos crear nuevas propiedades:
+
+	myObjeto['grado'] = 'Universitario';
+	myObjeto['carrera'] = 'Física';
+	myObjeto; // {nombre : 'francisco', apellido : 'tovar', edad: 29, funcion : function(){return 'programar'},
+	grado : 'Universitario', carrera: 'Fisica'}
+
+	Por último si queremos eliminar una propiedad del objeto podemos utilizar la palabra clave u operador delete:
+
+	//creamos una propiedad en nuestro objeto para borrar
+	myObjeto['keyToDelete'] = 'esta clave será eliminada';
+	myObjeto; //  {nombre : 'francisco', apellido : 'tovar', edad: 29, funcion : function(){return 'programar'},
+	grado : 'Universitario', carrera: 'Fisica', keyToDelete: 'esta clave será eliminada'}
+
+	//eliminamos la propiedad 'keyToDelete'
+	delete myObjeto['keyToDelete']; // retorna true si la propiedad existe, retorna false si no encuentra la propiedad
+	myObjeto; {nombre : 'francisco', apellido : 'tovar', edad: 29, funcion : function(){return 'programar'},
+	grado : 'Universitario'}
+
+	* Propiedades: Ya hemos introducido el concepto de propiedad en la definición de objeto, recordando, hemos dicho que 
+	una propiedad representa una asociación entre una clave y un valor. Si queremos ampliar este concepto podemos hacer
+	referencia a cosas conocidas por nosotros, pues un objeto representa la descripción de algo que puede ser tangible, 
+	basta con observar el objeto que hemos definido para saber que estamos describiendo una persona de nombre francisco, 
+	de apellido tovar, edad 29, etc. Entonces vemos que las propiedades describen a dicho objeto, tal cual como lo 
+	haríamos para cualquier objeto de la vida real.
+
+	* Métodos: Hasta el momento sabemos que los objetos son una colección de propiedades y que esas propiedades describen
+	ese objeto y que además estas propiedad pueden cualquier tipo de valor dado por javascript. Cuando una propiedad
+	tiene como valor una función se dice que esta es un método. En nuestro objeto hemos definido un metodo llamado funcion
+
+	//llamada al metodo funcion de 'myObjeto'
+	myObjeto.funcion() // retorna 'programar'
+
+	Esto además de ser interesante no hace pensar rapidamente que un metodo puede hacer muchas cosas, pero que sucede 
+	si yo quiero crear un metodo que modifique o muestre una propiedad del objeto creado?, como la hacemos?. 
+
+	Para nuestra suerte javascript integra la palabra clave 'this', this está determinado por como se invoca la función,
+	en este caso el método, para enterder esto veamos unos ejemplos
+
+	+++ Contexto global y modo estricto +++
+
+	Hagamos un parentesis y hagamos estudios de algunas lineas de código. En el contexto global, es decir, las lineas 
+	de código que ejecutamos fuera de cualquier función, this se refiere al objeto global(en los navegadores este 
+	objeto recibe el nombre window)
+	
+	this === window // true
+	// creamos una propiedad al objeto this
+	this.a = 50;
+	//vemos como tambien modifica el objeto window
+	window.a; // 50
+
+	//para las llamadas en una función 
+	function f1() {
+		return this;
+	}
+	//this sigue refiriendose al objeto global
+	f1() === window //true
+
+	El modo esctricto nos permite establecer this para el Contexto en el cual fue llamado
+
+	function f2() {
+		"use strict" // usamos modo estricto
+		return this 
+	}
+	//estamos usando modo estricto en f2 por lo que this se refiere a ese contexto
+	// y ya que no está establecida retorna undefined
+	f2() === window // false
+
+	Continuemos con los ejemplos aplicados a myObjeto
+	
+	// creemos una función que retorna el nombre completo usando el valor this, para el cual ha sido llamado
+	function nombreCompleto(){
+		// retornamos la propiedad nombre de this concatenada a la propiedad apellido de this, con un espacio
+		return this.nombre + ' ' +  this.apellido;
+	}
+	//asociamos la función a myObjeto, tenemos el método 'nombreCompleto'
+	myObjeto['nombreCompleto'] = nombreCompleto;
+	//llamando al metodo nombreCompleto
+	myObjeto.nombreCompleto(); // 'francisco tovar'
+
+	Cuando hacemos myObjeto.nombreCompleto() la función this es ligado al objeto myObjeto y dentro del entorno
+	de myObjeto podemos decir que this es un objeto que posee las mismas propiedades(nombre, apellido, edad, funcion, etc),
+	por lo cual dentro de la función nombreCompleto this.nombre devolvera 'francisco' y this.apellido 'tovar'.
+
+	Ahora nuestra imaginación vuela. Que sucede si asignando this al objeto myObjeto queremos obtener un valor de 
+	una propiedad que no exite? o peor aún, si no ligamos ningún objeto a this, es decir, llamamos la función nombreCompleto
+	de manera aislada?, pues bien es aqui donde es bueno recordar que javascript es un lenguaje de paradigma basado
+	en objetos, veamos los siguientes ejemplos:
+
+	//creamos una función para objetenes el valor de una propiedad que no existe
+	function doesExistOrNot(){
+		return this.color;
+	}
+	//creamos un método con el mismo nombre
+	myObjeto['doesExistOrNot'] = doesExistOrNot;
+	//llamamos al método
+	myObjeto.doesExistOrNot(); // undefined
+
+	Notamos que al hacer esto nos devuelve undefined, esto sucede porque no tenemos una propiedad llamada 'color' en 
+	myObjeto, analicemos las siguientes dos lineas,
+
+	//creamos una variable color de manera global(en este caso global se refiere a que está fuera de myObjeto y además 
+	no está dentro de ninguna otra función u objeto)
+	var color = 'morocho';
+	myObjeto.doesExistOrNot(); //undefined
+	doesExistOrNot(); // 'morocho';
+
+	La primera linea nos devuelve 'undefined' por la misma razón anterior, en la segunda linea no hemos ligado
+	ningun objeto a this, que sucede?, pues this se refiere al objeto global y como hemos definido una variable 'color', 
+	this.color tomará el valor 'morocho', así como hemos dicho que al ligar el objeto myObjeto 'this' toma la forma de 
+	myObjeto, cuando llamamos a la función doesExistOrNot() de manera aislada 'this' se convierte en un objeto global que
+	contiene todas las variables creadas y otros objetos creados por por defecto en javasrcipt que serán motivo de 
+	estudio mas adelante. Por ahora sabemos que para nuestro programa
+
+	this.color //'morocho'
+
+	En resumen los métodos son parte importante de los objetos, con ellos podemos, mostrar, devolver, modificar o
+	incluso eliminar alguna propiedad o propiedades de un objeto, javascript pone a nuestra disposición la palabra
+	clave this que nos permite referirnos a los objetos en cuestión, tambien javascript posee algunos métodos integrados
+	que ya hemos aprendido a utilizar, como el método .length que devuelve la cantidad de items de un array.
+
+
+	* Notación de puntos vs notación de corchetes: para acceder a los valores del objeto tenemos dos opciones, notación
+	de corchetes y notacion de puntos, en la primera hacemos uso de los corchetes encerrando el nombre de la clave en forma
+	de cadena, para el objeto creado sería:
+
+	myObjeto['nombre'] // 'francisco'
+	myObjeto['edad'] // 29
+
+	Otra forma integrada por javascript es la notación de punto o dot notation consiste en llamar la propiedad
+	colocando un punto entre el nombre del objeto y la propiedad, objeto.nombreDeLaPropiedad, en nuestro caso:
+
+	myObjeto.nombre // 'fran'
+	myObjeto.funcion // function(){}
+
+	Notamos que aunque la notación de punto es más comoda de usar esta tiene en contra que solo funciona de manera 
+	literal, es decir, no puedo usar una variable para buscar dicha propiedad en el objeto, veamos:
+
+	//defino una variable con el nombre de clave de alguna propiedad
+	var myVar = 'apellido';
+	//si quiero buscar la propiedad apellido nos devuelve undefined
+	myObjeto.myVar // undefined
+	//esto sucede debido a que el interprete no buscara no que está guardado en myVar, de hecho es como si no existiera
+	tal variable con valor 'apellido', lo que pasa es que busca una propiedad llamada 'myVar' en objeto, la cual no existe 
+	por el contrario si usamos la notacion de corchetes, si podemos hacer uso de dicha variable
+
+	myObjeto[myVar] // 'tovar'
+
+	Podemos concluir que la notación de corchetes nos brinda mayor flexibilidad, ya que ademas muchas veces estaremos
+	trabajando con objetos que tienen una gran cantidad de propiedades, por lo que tendrémos que hacer uso del 
+	algún metodo que nos permita iterar por dichas propiedades usando la notación de corchetes.
+
+	* Bucle `for…in`: ya estudiamos el bucle for para arrays en clases anteriores, tambien dijimos que podemos tener
+	objetos muy grandes, es decir, con muchas propiedades, que sucede si quiero recorrer todas esas propiedades?. JS
+	ha integrado para nosotros un bucle for ... in que no hace más que recorrer las propiedades de un objeto(debemos
+	recordar que los arrays tambien pueden ser vistos como objetos), el bucle itera sobre todas las propiedades del
+	objeto en sí, estudiemos el siguiente ejemplo:
+
+	//iteramos las propiedades de nuestro objeto myObjeto
+	for (propiedad in myObjeto){
+		//impimimos en pantalla los pares clave valor de myObjeto 
+		console.log(`${propiedad}: ${myObjeto[propiedad]}`);
+	} // nombre: fran 
+	apellido: tovar
+	edad: 29
+	funcion: function(){return 'programar'}
+	nombreCompleto: function nombreCompleto(){
+		// retornamos la propiedad nombre de this concatenada a la propiedad apellido de this, con un espacio
+		return this.nombre + ' ' +  this.apellido;
+	}
+	doesNotexist: function doesNotexist(){
+		return this.color;
+	}
+
+	Notamos que en el bucle for los nombres de las propiedades se almacenan en la variable 'propiedad'(la cual es una 
+	variable local de dicho bucle), en este ejemplo hicimos uso de la notación de corchetes para obtener el valor 
+	de la propiedad en cuestión, acá hemos impreso los pares clave valor para cada propiedad. 
+	
