@@ -1,0 +1,181 @@
+En un archivo de texto separado que debes crear, escribe explicaciones de los siguientes conceptos como si se lo 
+estuvieras explicando a un niño de 12 años. Hacer esto te ayudará a descubrir rápidamente cualquier agujero en tu 
+comprensión.
+
+
+
+* `prototype`: Podemos recordar que javascript esta diseñado sobre un paradigma simple basado en objetos, esto es como decir que 
+todo lo que creamos es un objeto en sí. Javascript integra para sus objetos una referencia a un objeto llamado prototype o proto
+esto puede verse como un objeto auxiliar de donde podemos hacer uso de propiedades y métodos que ya están definidas por defecto, 
+aunq tambien podrían definirse, imaginese que una empresa crea un producto con ciertas funcionalidades pero pone las accesorios
+en el mercado de manera que sus clientes pueden hacer uso de ellos si lo necesitan.
+
+Para seguir entendiendo los que es un prototipo en JS una propiedad de interes es __proto__, esta es una propiedad que provee 
+acceso al interior del objeto prototype, esta  puede ser usada en objetos creados de forma literal. Para objetos creados usando 
+un objeto literal el valor es Object.prototype, para arrays Array.prototype, para funciones Function.prototype.
+
+//veamos un ejemplo
+var obj = {} //creamos un objeto vacio
+obj.__proto__ /* {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
+constructor: ƒ Object()
+hasOwnProperty: ƒ hasOwnProperty()
+isPrototypeOf: ƒ isPrototypeOf()
+propertyIsEnumerable: ƒ propertyIsEnumerable()
+toLocaleString: ƒ toLocaleString()
+toString: ƒ toString()
+valueOf: ƒ valueOf()
+__defineGetter__: ƒ __defineGetter__()
+__defineSetter__: ƒ __defineSetter__()
+__lookupGetter__: ƒ __lookupGetter__()
+__lookupSetter__: ƒ __lookupSetter__()
+get __proto__: ƒ __proto__()
+set __proto__: ƒ __proto__()*/
+
+Hacer esto nos permite obtener toda la información del objeto, notamos que poseemos muchas propiedades y métodos dentro de
+este, por ejemplo el metodo .toString() que devuelve una cadena que representa al objeto, debido a esta referencia que hace
+javascript a cada uno de sus objetos es que podemos usar los metodos y propiedades integrados, lo que
+quiere decir que cada vez que creamos una variable y asignamos un valor automáticamente el interprete determina a que tipo
+de objeto(prototype) pertenece y le asigna un permiso para usar todas las funciones integradas para ese tipo de objeto.
+
+Lo hablado anteriormente es valido tambien cuando usamos clases, imaginemos que tenemos creada la clase Auto
+
+  function Auto(marca, modelo, color) {
+      this.marca = marca || 'ferrari'; // default operator
+      this.modelo = modelo || 'F8 spider'; 
+      this.color = color || 'red';
+      this.luces = false;
+      this.encender = function(){
+          this.luces = true; //cambia el valor de la propiedad 'luces' en Auto
+      }
+  }
+
+  Esta clase tiene propiedades marca, modelo, color, luces, y el método encender, si necesitamos crear tres instancias de Auto ya
+  sabemos como hacerlo
+
+  var auto1 = new Auto();
+  var auto2 = new Auto('Ford', 'Fiesta');
+  var auto3 = new Auto('Chevrolet', 'Trailblazer');
+  
+  Todos estos autos poseen la esctructura de myAuto, pero que sucede si ahora quiero agregar un metodo a estos objetos?, tengo que 
+  modificar uno por uno?, aquí podemos hacer uso de prototype y con ella agregar metodos o propiedades a mi clase myAuto
+
+  //creamos un método getColor a myAuto usando prototype
+  Auto.prototype.getColor = function(){ return this.color}
+  //ahora podemos hacer uso del método en cualquiera de los objetos
+  auto1.getColor(); //'red'
+  //pero si vemos el objeto auto
+  auto1; // Auto {marca: "ferrari", modelo: "F8 spider", color: "red", luces: false, encender: ƒ}
+
+  El objeto auto1 no posee el método getColor, no obstante cuando es invocado por este, el interprete lo busca en en objeto
+  prototype que es donde en realidad se ha definido el método, en el caso de que nosotros necesitemos definir un método getColor
+  dentro de alguno de nuestro objetos podemos hacerlo. No obstante la utilización del prototype permite mejorar la eficiencia del
+  programa debido a que solo estamos definiendo la función una solo vez lo que ahorra memoria.
+
+
+* _Constructors_ (de Clases): Para empezar vamos con la definición de constructores y prototipos, entendamos primero que es una clase,
+en programación una clase no es más que una función que nos permite crear un modelo
+o plantilla para definir un objeto. Los objetos creados a partir de una clase se dice que son instancias de esa clase y esta función recibe
+el nombre de función constructora.
+
+  Hemos dicho que las clases se usan para crear objetos, y sabemos que los objetos modelan cosas de la vida real, 
+  entonces, si queremos hacer muchas cantidades de cualquier cosa en la vida real, es lógico que creemos primero una 
+  plantilla que nos premita replicar ese objeto cuantas veces querramos. La sintaxis para crear una clase en javascript
+  es la siguiente:
+
+  function Nombredeclase() {
+      //definimos propiedades del objeto this
+      this.propiedad1 = valor1;
+      this.propiedad2 = valor2;
+      //devuelve el objeto this
+  }
+
+  new Nombredeclase(); // invoca la clase Nombredeclase
+
+  La sintaxis es muy parecida a la definición de una función cualquiera, el contenido de la clase es la parte que se 
+  encuentra entre llaves {}, ahí se definen los miembros de la clase, como las propiedades, métodos o constructores, 
+  como convención tenemos que la definición del nombre de clase debe hacerse con la primera letra en mayúscula. 
+  
+  Algo que llama la atención es que la clase no retorna nada(no usa la palabra clave return), además usa la palabra reservada this, 
+  para entender un poco más sobre el uso de this en la definición de clases, veamos primero como hacemos uso de las clases:
+
+  //definimos una clase de nombre Auto, luego tratemos de entender cada linea de código
+
+  function Auto(marca, modelo, color) {
+      this.marca = marca; //establecemos la propiedad marca con el valor pasado marca
+      this.modelo = modelo; //establecemos la propiedad modelo con el valor pasado modelo
+      this.color = color; //establecemos la propiedad color con el valor pasado color
+  }
+  // definimos una instancia de Auto
+  var myAuto = new Auto('Ferrari', '488', 'red');
+  //en este caso decimos que myAuto es un objeto que ha sido creado a partir de la clase Auto
+
+  Anteriormente dijimos que la clase puede ser tratada como las funciones que ya hemos visto, es por ello que podemos pasar argumentos,
+  en este caso hemos creado la clase Auto y hemos decidido pasarle tres argumentos, dichos argumentos nos permiten establecer
+  las propiedades definidas dentro de la clase (marca, modelo y color), aún así no tenemos claro que función cumple tanto this dentro
+  la clase y vemos que tenemos una nueva palabra clave 'new' al momento de acceder a la clase. 
+  
+  La palabra clave 'new' establece a this como un objeto vacío usando el metodo .bind() y devuelve el objeto this (todo este proceso lo 
+  hace el interprete por nosotros detrás de escenas), es por ello que podemos crear las diferentes propiedades marca, modelo y color, 
+  de no usar la palabra clave new vamos a notar que myAuto es igual a undefined, en este caso this es undefined.
+
+  Que sucede si no paso nigún argumento al momento de crear una instancia?, veamos
+  
+  var Auto2 = new Auto();
+  Auto2; // Auto { marca: undefined, modelo: undefined, color: undefined}
+
+  Aprovechamos para hacer el estudio de dos cosas interesantes, primero notamos como el interprete nos devuelve el valor de Auto2
+  imprime el nombre de la clase constructora(en este caso Auto), luego el objeto asociado a dicha instancia(this con las propiedades),
+  pero lo más importante por el momento es que no es muy agradable que las instancias tengan valores no definidos, podemos hacer uso del
+  'default operator', podemos redefinir nuestra clase como sigue:
+
+  function Auto(marca, modelo, color) {
+      this.marca = marca || 'ferrari'; // default operator
+      this.modelo = modelo || 'F8 spider'; 
+      this.color = color || 'red'; 
+  }
+
+  El uso del operador por defecto nos permite tener valores predeterminados para el caso en que se cree una instancia de la clase sin
+  proporcionar ningún argumento, para entender esto debemos hacer memoria de lo visto en los operadores booleanos, en este caso el 
+  valor de cada una de las propiedades depende de lo devuelto por la operación lógica OR de las variables(marca, modelo, color) y los 
+  valores usados('ferrari', 'F8 spider', 'red'), en el caso de que alguno de los variables sea undefined la propiedad de la clase
+  tomará el valor proporcionado es decir, 
+  
+  undefined || valor // devuelve el valor almacenado en valor
+  //en el caso de que proporcionemos el valor al crear la instancia, no importa el valor de la variable 'valor'
+  'Ford' || valor // 'Ford'
+
+  Así, si creamos una instancia sin argumentos:
+
+  var myAuto = new Auto();
+  myAuto; // Auto { marca: 'ferrari', modelo: 'F8 spider', color: 'red' }
+
+  Ya mencinamos que podemos definir métodos dentro de las clases, en este ejemplo vamos a ver que valor toma 'this', puesto que no
+  es intuitivo saber a que se está refiriendo ya que está dentro del contexto de la clase
+
+  //definamos una clase parecida a la anterior
+
+  function Auto(marca, modelo, color) {
+      this.marca = marca || 'ferrari'; // default operator
+      this.modelo = modelo || 'F8 spider'; 
+      this.color = color || 'red';
+      this.luces = false;
+      this.encender = function(){
+          this.luces = true; //cambia el valor de la propiedad 'luces' en Auto
+      }
+  }
+  var myAuto = new Auto();
+  myAuto; Auto {marca: "ferrari", modelo: "F8 spider", color: "red", luces: false, encender: ƒ}
+  //llamamos el método encender
+  myAuto.encender();
+  myAuto; // Auto {marca: "ferrari", modelo: "F8 spider", color: "red", luces: true, encender: ƒ}
+
+  Vemos que se modificó el valor de la propiedad 'luces', para entender esto, veamos la definición de la clase Auto
+  cuando creamos la instancia myAuto este toma el valor del objeto 
+  {marca: "ferrari", modelo: "F8 spider", color: "red", luces: false, encender: ƒ}
+  de esta manera cuando llamamos el metodo encender estamos ligando 'this' a ese objeto(el objeto myAuto), así dentro del método
+  encender this toma la forma de ese objeto pudiendo modificar esa propiedad llamadoa luces.
+
+
+
+
+

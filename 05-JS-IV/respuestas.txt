@@ -209,4 +209,3 @@
 	Notamos que en el bucle for los nombres de las propiedades se almacenan en la variable 'propiedad'(la cual es una 
 	variable local de dicho bucle), en este ejemplo hicimos uso de la notación de corchetes para obtener el valor 
 	de la propiedad en cuestión, acá hemos impreso los pares clave valor para cada propiedad. 
-	

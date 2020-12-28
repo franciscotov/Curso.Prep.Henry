@@ -1,0 +1,44 @@
+En un archivo de texto separado que debes crear, escribe explicaciones de los siguientes conceptos como si se lo 
+estuvieras explicando a un niño de 12 años. Hacer esto te ayudará a descubrir rápidamente cualquier agujero en tu 
+comprensión.
+
+
+* Funciones Callback: Una retrollamada o callback en inglés, es el nombre que recibe una función 'A' que se pasa como
+argumento a otra función 'B'. Cada vez que es ejecutada 'B', es ejecutada 'A'. Para entender de manera mas fácil 
+veamos lo que nos devuelven las siguientes lineas de código
+
+// Definamos una función cualquiera que llamaremos 'A'
+function A(){
+    return 'hola';
+}
+
+Sabemos que para invocar dicha función basta con hacer lo siguiente:
+
+A(); // 'hola'
+
+Pero que sucede si no deseo invocar la función? si no que deseo es usar la functión en sí?, veamos
+
+A; // A(){ return 'hola'}
+
+Esta linea me devuelve la función en sí, sabiendo esto experimentemos un poco con otras funciones.
+
+Imaginemos que tenemos una función 'A' que recibe un parámetro nombre y retorna un string
+function A(nombre){
+    return 'Hello ' + nombre;
+}
+
+Ahora por razones de trabajo deseamos tener una función 'B' que complemente lo devuelto por la función 'A'
+y no queremos eliminar ni modificar 'A' por razones de uso. Tal y como hemos definido 'A' vemos que nuestra función
+necesita, recibir el parametro nombre que es requerido por 'A' y la función 'A' en sí:
+
+function B(nombre, callback){
+    //el parámetro callback es la función que necesitamos pasar, nombre es un string
+    //retornamos lo devuelto por la función callback, más el complemento
+    return callback(nombre) + ' como estas!';
+}
+
+//invocamos la función 'B'
+B('fran', A); // "hola fran como estas!"
+
+Vemos como es una herramienta bastante poderosa, ya que podríamos tener funciones mucho más complejas y de 
+esta menera podríamos usar ambas siempre que sea requerido.
